@@ -1,0 +1,29 @@
+{
+  "name": "my-xword-stats",
+  "version": "0.0.1",
+  "description": "What am I about?",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "request-promise": "^4.2.2",
+    "request": "^2.83.0",
+    "luxon": "^0.2.9",
+    "bluebird": "^3.5.1",
+    "memory-cache": "^0.2.0"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/welcome-project"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
