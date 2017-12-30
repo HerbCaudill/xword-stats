@@ -1,29 +1,44 @@
 {
   "name": "my-xword-stats",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "A data visualization of New York Times crossword puzzle solve times.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "concurrently --kill-others \"npm run start:server\" \"npm run start:client\"",
+    "start:server": "node server.js",
+    "start:client": "webpack-dev-server --colors --hot --inline"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "request-promise": "^4.2.2",
-    "request": "^2.83.0",
-    "luxon": "^0.2.9",
-    "bluebird": "^3.5.1",
-    "memory-cache": "^0.2.0"
+    "d3": "4.12.2",
+    "express": "4.16.2",
+    "jquery": "3.2.1",
+    "request-promise": "4.2.2",
+    "request": "2.83.0",
+    "luxon": "0.2.9",
+    "bluebird": "3.5.1",
+    "memory-cache": "0.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "css-loader": "0.28.7",
+    "eslint": "4.8.0",
+    "eslint-loader": "1.9.0",
+    "file-loader": "1.1.5",
+    "html-loader": "0.5.1",
+    "node-sass": "4.5.3",
+    "raw-loader": "0.5.1",
+    "sass-loader": "6.0.6",
+    "style-loader": "0.19.0",
+    "svg-loader": "0.0.2",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.9.1",
+    "webpack-notifier": "1.5.0"
   },
   "engines": {
-    "node": "8.x"
-  },
-  "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "node": "8.7.0"
   },
   "license": "MIT",
-  "keywords": [
-    "node",
-    "glitch",
-    "express"
-  ]
+  "repository": {
+    "url": "https://github.com/HerbCaudill/xword-stats.git"
+  }
 }

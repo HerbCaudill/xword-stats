@@ -1,0 +1,44 @@
+@import "bootstrap.css";
+body {
+    margin: 2em;
+    font: 12px Roboto;
+}
+
+svg {
+    display: block;
+}
+
+.axis path.domain {
+    stroke: none;
+}
+
+.axis--x .tick line {
+    stroke: #eee;
+}
+
+g.day {
+    rect {
+        fill: black;
+        opacity: .03;
+    }
+    >text {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+}
+
+/* voronoi overlay */
+
+.voronoi {
+    path {
+        stroke: red;
+        fill: none;
+        pointer-events: all;
+    }
+    circle {
+        fill: gray;
+    }
+    g:hover circle {
+        fill: red;
+    }
+}
