@@ -1,0 +1,374 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jquery": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "angular": false
+    },
+    "rules": {
+        "accessor-pairs": "error",
+        "array-bracket-spacing": [
+            "error",
+            "never"
+        ],
+        "array-callback-return": "error",
+        "arrow-body-style": [
+            "error",
+            "as-needed"
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
+        "arrow-spacing": "error",
+        "block-scoped-var": "error",
+        "brace-style": [
+            "error",
+            "1tbs"
+        ],
+        "camelcase": "error",
+        "class-methods-use-this": "error",
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "always-multiline"
+            }
+        ],
+        "comma-spacing": "error",
+        "comma-style": [
+            "error",
+            "last"
+        ],
+        "computed-property-spacing": "error",
+        "consistent-return": "error",
+        "curly": [
+            "error",
+            "multi-line"
+        ],
+        "dot-notation": "error",
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "eqeqeq": [
+            "error",
+            "smart"
+        ],
+        "func-call-spacing": [
+            "error",
+            "never"
+        ],
+        "func-style": [
+            "error",
+            "declaration",
+            {
+                "allowArrowFunctions": true
+            }
+        ],
+        "function-paren-newline": [
+            "error",
+            "consistent"
+        ],
+        "generator-star-spacing": [
+            "error",
+            "after"
+        ],
+        "indent": [
+            "error",
+            2
+        ],
+        "key-spacing": "error",
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true,
+                "overrides": {
+                    "return": {
+                        "after": true
+                    },
+                    "throw": {
+                        "after": true
+                    },
+                    "case": {
+                        "after": true
+                    }
+                }
+            }
+        ],
+        "max-len": [
+            "error",
+            150,
+            4,
+            {
+                "ignoreUrls": true,
+                "ignoreComments": false,
+                "ignoreRegExpLiterals": true,
+                "ignoreStrings": true,
+                "ignoreTemplateLiterals": true
+            }
+        ],
+        "max-lines": [
+            "error",
+            {
+                "max": 300,
+                "skipBlankLines": false,
+                "skipComments": true
+            }
+        ],
+        "max-statements-per-line": "error",
+        "new-cap": [
+            "error",
+            {
+                "newIsCap": true,
+                "newIsCapExceptions": [],
+                "capIsNew": false,
+                "capIsNewExceptions": [
+                    "Immutable.Map",
+                    "Immutable.Set",
+                    "Immutable.List"
+                ]
+            }
+        ],
+        "newline-per-chained-call": [
+            "error",
+            {
+                "ignoreChainWithDepth": 2
+            }
+        ],
+        "no-alert": "error",
+        "no-array-constructor": "error",
+        "no-bitwise": "error",
+        "no-caller": "error",
+        "no-case-declarations": "error",
+        "no-console": "warn",
+        "no-dupe-class-members": "error",
+        "no-duplicate-imports": "error",
+        "no-else-return": "error",
+        "no-empty-function": "error",
+        "no-eval": "error",
+        "no-extra-label": "error",
+        "no-extra-parens": "error",
+        "no-fallthrough": "error",
+        "no-global-assign": "error",
+        "no-implied-eval": "error",
+        "no-iterator": "error",
+        "no-label-var": "error",
+        "no-labels": [
+            "error",
+            {
+                "allowSwitch": true
+            }
+        ],
+        "no-lone-blocks": "error",
+        "no-lonely-if": "error",
+        "no-loop-func": "error",
+        "no-mixed-spaces-and-tabs": "error",
+        "no-multi-assign": "error",
+        "no-multi-spaces": "error",
+        "no-multi-str": "error",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 2
+            }
+        ],
+        "no-negated-condition": "error",
+        "no-new": "error",
+        "no-new-func": "error",
+        "no-new-object": "error",
+        "no-new-wrappers": "error",
+        "no-octal": "error",
+        "no-octal-escape": "error",
+        "no-param-reassign": "error",
+        "no-plusplus": "error",
+        "no-proto": "error",
+        "no-restricted-globals": [
+            "error",
+            "isFinite",
+            "isNaN"
+        ],
+        "no-restricted-properties": [
+            "error",
+            {
+                "object": "arguments",
+                "property": "callee",
+                "message": "arguments.callee is deprecated"
+            },
+            {
+                "object": "global",
+                "property": "isFinite",
+                "message": "Please use Number.isFinite instead"
+            },
+            {
+                "object": "self",
+                "property": "isFinite",
+                "message": "Please use Number.isFinite instead"
+            },
+            {
+                "object": "window",
+                "property": "isFinite",
+                "message": "Please use Number.isFinite instead"
+            },
+            {
+                "object": "global",
+                "property": "isNaN",
+                "message": "Please use Number.isNaN instead"
+            },
+            {
+                "object": "self",
+                "property": "isNaN",
+                "message": "Please use Number.isNaN instead"
+            },
+            {
+                "object": "window",
+                "property": "isNaN",
+                "message": "Please use Number.isNaN instead"
+            },
+            {
+                "property": "__defineGetter__",
+                "message": "Please use Object.defineProperty instead."
+            },
+            {
+                "property": "__defineSetter__",
+                "message": "Please use Object.defineProperty instead."
+            }
+        ],
+        "no-restricted-syntax": [
+            "error",
+            "ForInStatement",
+            "ForOfStatement",
+            "LabeledStatement",
+            "WithStatement"
+        ],
+        "no-return-assign": [
+            "error",
+            "always"
+        ],
+        "no-return-await": "error",
+        "no-script-url": "error",
+        "no-self-compare": "error",
+        "no-sequences": "error",
+        "no-shadow": "error",
+        "no-shadow-restricted-names": "error",
+        "no-spaced-func": "error",
+        "no-tabs": "error",
+        "no-throw-literal": "error",
+        "no-trailing-spaces": "error",
+        "no-undef": "error",
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allow": [],
+                "allowAfterThis": false,
+                "allowAfterSuper": false,
+                "enforceInMethodNames": false
+            }
+        ],
+        "no-unneeded-ternary": "error",
+        "no-unmodified-loop-condition": "error",
+        "no-unused-expressions": "error",
+        "no-useless-call": "error",
+        "no-useless-computed-key": "error",
+        "no-useless-concat": "error",
+        "no-useless-constructor": "error",
+        "no-useless-escape": "error",
+        "no-useless-rename": "error",
+        "no-useless-return": "error",
+        "no-var": "error",
+        "no-void": "error",
+        "no-whitespace-before-property": "error",
+        "nonblock-statement-body-position": "error",
+        "object-curly-newline": [
+            "error",
+            {
+                "consistent": true
+            }
+        ],
+        "object-shorthand": "error",
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "one-var": [
+            "error",
+            "never"
+        ],
+        "operator-assignment": [
+            "error",
+            "always"
+        ],
+        "operator-linebreak": "error",
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
+        "prefer-arrow-callback": "error",
+        "prefer-numeric-literals": "error",
+        "prefer-const": "error",
+        "prefer-rest-params": "error",
+        "prefer-spread": "error",
+        "prefer-template": "error",
+        "quote-props": [
+            "error",
+            "as-needed"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "radix": "error",
+        "require-yield": "error",
+        "rest-spread-spacing": "error",
+        "semi": [
+            "error",
+            "always"
+        ],
+        "semi-spacing": "error",
+        "semi-style": "error",
+        "space-before-blocks": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "asyncArrow": "always",
+                "named": "never"
+            }
+        ],
+        "space-in-parens": [
+            "error",
+            "never"
+        ],
+        "space-infix-ops": "error",
+        "space-unary-ops": [
+            "error",
+            {
+                "words": true,
+                "nonwords": false
+            }
+        ],
+        "spaced-comment": "error",
+        "switch-colon-spacing": "error",
+        "template-curly-spacing": "error",
+        "wrap-iife": [
+            "error",
+            "any"
+        ],
+        "yield-star-spacing": [
+            "error",
+            "after"
+        ],
+        "yoda": "error"
+    }
+}
