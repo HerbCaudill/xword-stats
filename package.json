@@ -9,7 +9,7 @@
     "start:client": "webpack-dev-server --colors --hot --inline"
   },
   "dependencies": {
-    "d3": "4.12.2",
+    "d3": "7.6.1",
     "express": "4.16.2",
     "jquery": "3.2.1",
     "request-promise": "4.2.2",
