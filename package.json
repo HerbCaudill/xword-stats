@@ -4,11 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "localhost-dev pnpm dev:app",
     "build": "next build",
     "start": "next start",
     "stats": "NODE_NO_WARNINGS=1 node ./src/scripts/persistStats.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "dev:app": "next dev --hostname 127.0.0.1",
+    "dev:url": "localhost-dev url"
   },
   "dependencies": {
     "@js-joda/core": "^5.6.5",
