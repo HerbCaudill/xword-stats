@@ -1,26 +1,16 @@
 import type { LocalDate } from '@js-joda/core'
-import type { NytPuzzle } from '@/types.ts'
-import { headers } from './headers.ts'
+import type { NytArchivePuzzle } from '@/types.ts'
+import { fetchNyt } from './fetchNyt.ts'
 
-import dotenv from 'dotenv'
-dotenv.config()
-
-/**
- * Retrieves NYT Crossword puzzle IDs for a specific date range
- */
-export async function getPuzzleIdsForDateRange(startDate: LocalDate, endDate: LocalDate) {
-  const subscriberId = process.env.NYT_SUBSCRIBER_ID
-
-  const url = `https://www.nytimes.com/svc/crosswords/v3/${subscriberId}/puzzles.json?publish_type=daily&date_start=${startDate.toString()}&date_end=${endDate.toString()}`
-
-  const response = await fetch(url, { headers })
-
-  const { results }: { results: NytPuzzle[] } = await response.json()
-  const ids = (results || []) //
-    .filter(({ solved }: NytPuzzle) => solved === true)
-    .map(({ puzzle_id }: NytPuzzle) => puzzle_id)
-
-  console.log(`${startDate.toString()} to ${endDate.toString()}: ${ids.length} solved puzzles`)
-
-  return ids
+/** Gets the IDs of all daily NYT crosswords published in a date range of at most 31 days. */
+export async function getPuzzleIdsForDateRange(
+  /** First publication date, inclusive */
+  startDate: LocalDate,
+  /** Last publication date, inclusive */
+  endDate: LocalDate,
+) {
+  const puzzles = await fetchNyt<NytArchivePuzzle[]>(
+    `/svc/games/v1/archive/crossword_daily/${startDate.toString()}/${endDate.toString()}`,
+  )
+  return puzzles.map(({ id }) => id)
 }

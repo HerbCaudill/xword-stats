@@ -10,11 +10,6 @@ type RouteParams = {
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    // Get the subscriber ID from environment variables
-    const subscriberId = process.env.NYT_SUBSCRIBER_ID
-    if (!subscriberId)
-      return NextResponse.json({ error: 'NYT_SUBSCRIBER_ID environment variable is not set' }, { status: 500 })
-
     // Parse the start date from the path parameter
     const { startDate: startDateParam } = await params
     let startDate: LocalDate

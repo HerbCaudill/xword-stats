@@ -1,25 +1,15 @@
-import type { NytPuzzle } from '@/types.ts'
-import { headers } from './headers.ts'
+import type { NytGameStates } from '@/types.ts'
+import { fetchNyt } from './fetchNyt.ts'
+import { parseGameStates } from './parseGameStates.ts'
 
-/**
- * Gets stats for a specific set of puzzle IDs
- */
-export async function getStatsForPuzzleIds(puzzleIds: number[]) {
-  const subscriberId = process.env.NYT_SUBSCRIBER_ID
-
+/** Gets the user's solve stats for up to 31 puzzle IDs. */
+export async function getStatsForPuzzleIds(
+  /** NYT puzzle IDs */
+  puzzleIds: number[],
+) {
   if (puzzleIds.length === 0) return []
-
-  const url = `https://www.nytimes.com/svc/crosswords/v3/${subscriberId}/progress.json?puzzle_ids=${puzzleIds.join()}`
-  const response = await fetch(url, { headers })
-
-  const { results: puzzles = [] }: { results: NytPuzzle[] } = await response.json()
-
-  return puzzles
-    .filter(({ solved, time_elapsed }: NytPuzzle) => solved === true && time_elapsed > 0)
-    .map(({ puzzle_id, print_date, last_modified, time_elapsed }: NytPuzzle) => ({
-      id: puzzle_id,
-      date: print_date,
-      dateSolved: last_modified.split(' ')[0],
-      time: time_elapsed,
-    }))
+  const states = await fetchNyt<NytGameStates>(
+    `/svc/games/state/crossword_daily/latests?puzzle_ids=${puzzleIds.join(',')}`,
+  )
+  return parseGameStates(states)
 }

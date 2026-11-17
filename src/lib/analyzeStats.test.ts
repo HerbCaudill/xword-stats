@@ -10,7 +10,7 @@ describe('analyzeStats', () => {
   it('should analyze puzzle statistics correctly', () => {
     const result = analyzeStats(stats as PuzzleStat[])
 
-    expect(result.average).toMatchInlineSnapshot(`1197`)
+    expect(result.average).toMatchInlineSnapshot(`1113`)
     expect(result.best).toMatchInlineSnapshot(`
       {
         "date": "2021-08-02",
@@ -19,16 +19,14 @@ describe('analyzeStats', () => {
         "time": 259,
       }
     `)
-    expect(result.total).toMatchInlineSnapshot(`1869421`)
-    expect(result.stats.length).toMatchInlineSnapshot(`1562`)
+    expect(result.total).toMatchInlineSnapshot(`2304937`)
+    expect(result.stats.length).toMatchInlineSnapshot(`2071`)
 
-    expect(result.minDate.toString()).toMatchInlineSnapshot(`"2015-01-01"`)
-    expect(result.maxDate.toString()).toMatchInlineSnapshot(`"2025-12-31"`)
+    expect(result.minDate.toString()).toMatchInlineSnapshot(`"2017-01-01"`)
+    expect(result.maxDate.toString()).toMatchInlineSnapshot(`"2026-12-31"`)
 
     expect(result.years).toMatchInlineSnapshot(`
       [
-        2015,
-        2016,
         2017,
         2018,
         2019,
@@ -38,13 +36,14 @@ describe('analyzeStats', () => {
         2023,
         2024,
         2025,
+        2026,
       ]
     `)
 
     const monday = result.byDayOfWeek['1']
-    expect(monday.average).toMatchInlineSnapshot(`475`)
+    expect(monday.average).toMatchInlineSnapshot(`455`)
     expect(monday.best?.time).toMatchInlineSnapshot(`259`)
-    expect(monday.total).toMatchInlineSnapshot(`95972`)
-    expect(monday.stats.length).toMatchInlineSnapshot(`202`)
+    expect(monday.total).toMatchInlineSnapshot(`122967`)
+    expect(monday.stats.length).toMatchInlineSnapshot(`270`)
   })
 })

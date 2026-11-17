@@ -1,56 +1,32 @@
 import { LocalDate } from '@js-joda/core'
 import { getStatsForPuzzleIds } from './getStatsForPuzzleIds.ts'
 import { getPuzzleIdsForDateRange } from './getPuzzleIdsForDateRange.ts'
+import type { EncodedPuzzleStat } from './hydrate.ts'
 
-/**
- * Gets stats for a specific date range, automatically chunking requests to stay under API limits
- */
+/** Gets the user's solve stats for puzzles published in a date range. */
 export async function getStats({
   startDate,
-  endDate = LocalDate.now(), // Default to today if no end date provided
+  endDate = LocalDate.now(),
 }: {
+  /** First publication date, inclusive */
   startDate: LocalDate
+  /** Last publication date, inclusive; defaults to today */
   endDate?: LocalDate
 }) {
-  // Ensure startDate is before or equal to endDate
-  if (startDate.isAfter(endDate)) {
-    throw new Error('Start date must be before or equal to end date')
-  }
+  if (startDate.isAfter(endDate)) throw new Error('Start date must be before or equal to end date')
 
-  const dateChunkSize = 100
-  const idChunkSize = 100
-  const allPuzzleIds: number[] = []
-  let currentStart = startDate
+  const results: EncodedPuzzleStat[] = []
 
-  // Phase 1: Collect all puzzle IDs for solved puzzles in the date range
-  console.log('')
-  console.log('Phase 1: Collecting puzzle IDs for solved puzzles...')
-  while (!currentStart.isAfter(endDate)) {
-    // Calculate end of current date chunk
-    const chunkEnd = currentStart.plusDays(dateChunkSize - 1)
-    const puzzleIds = await getPuzzleIdsForDateRange(currentStart, chunkEnd)
-    allPuzzleIds.push(...puzzleIds)
-
-    // Move to the next chunk
-    currentStart = chunkEnd.plusDays(1)
-  }
-
-  console.log(`Phase 1 complete: Found ${allPuzzleIds.length} total solved puzzles`)
-
-  // Phase 2: Get stats for puzzle IDs in chunks
-
-  console.log('')
-  console.log('Phase 2: Fetching stats for puzzle IDs...')
-  const results: { date: string; time: number }[] = []
-
-  for (let i = 0; i < allPuzzleIds.length; i += idChunkSize) {
-    const idChunk = allPuzzleIds.slice(i, i + idChunkSize)
-    const stats = await getStatsForPuzzleIds(idChunk)
+  // Both NYT endpoints accept at most 31 puzzles per request, so walk the range in 31-day chunks
+  for (let chunkStart = startDate; !chunkStart.isAfter(endDate); chunkStart = chunkStart.plusDays(chunkSize)) {
+    const chunkEnd = LocalDate.ofEpochDay(Math.min(chunkStart.plusDays(chunkSize - 1).toEpochDay(), endDate.toEpochDay()))
+    const puzzleIds = await getPuzzleIdsForDateRange(chunkStart, chunkEnd)
+    const stats = await getStatsForPuzzleIds(puzzleIds)
     results.push(...stats)
-
-    console.log(`Processed ${Math.min(i + idChunkSize, allPuzzleIds.length)}/${allPuzzleIds.length} puzzle IDs`)
+    console.log(`${chunkStart} to ${chunkEnd}: ${stats.length} of ${puzzleIds.length} puzzles solved`)
   }
 
-  console.log(`Phase 2 complete: Retrieved stats for ${results.length} puzzles`)
   return results
 }
+
+const chunkSize = 31
