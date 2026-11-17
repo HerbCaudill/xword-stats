@@ -28,8 +28,6 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
     years, // An array of years present in the dataset
     maxTime, // The maximum time taken to solve a puzzle
     byDayOfWeek, // Stats grouped by day of the week
-    trailingAverages, // Overall trailing averages
-    trailingAveragesByDay, // Trailing averages grouped by day
   } = useMemo(() => {
     console.log(`Analyzing ${stats.length} stats...`)
     return analyzeStats(stats)
@@ -91,24 +89,6 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
 
   const best = selectedDay !== null ? byDayOfWeek[selectedDay]?.best : undefined
   const latest = selectedDay !== null ? byDayOfWeek[selectedDay]?.latest : undefined
-
-  // Create path for trailing average line - use day-specific averages when a day is selected
-  const currentTrailingAverages =
-    selectedDay !== null ? trailingAveragesByDay[selectedDay] : trailingAverages
-
-  // Filter to only show trailing averages up to current date
-  const today = LocalDate.now()
-  const filteredTrailingAverages = currentTrailingAverages.filter(
-    point => !point.date.isAfter(today),
-  )
-
-  const trailingAveragePath = filteredTrailingAverages
-    .map((point, index) => {
-      const x = scaleX(point.average)
-      const y = scaleY(point.date)
-      return `${index === 0 ? "M" : "L"} ${x} ${y}`
-    })
-    .join(" ")
 
   const showTooltip = (stat: PuzzleStat) => {
     if (selectedDay === null || selectedDay === stat.date.dayOfWeek().value()) {
@@ -300,22 +280,6 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
             ))}
           </g>
 
-          {/* Trailing average line */}
-          {filteredTrailingAverages.length > 0 && (
-            <g transform={`translate(${pad.left}, ${pad.top})`}>
-              <path
-                d={trailingAveragePath}
-                stroke={getColor(selectedDay)}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={15}
-                fill="none"
-                opacity={0.3}
-                style={{ pointerEvents: "none" }}
-              />
-            </g>
-          )}
-
           {/* Average time lines for each year */}
           <g>
             {yTicks.map((tick, i) => {
@@ -336,7 +300,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                     width={lineX}
                     height={lineEndY - lineStartY}
                     fill={lineColor}
-                    opacity={0.05}
+                    opacity={0.1}
                     style={{ pointerEvents: "none" }}
                   />
                   {/* Average line */}
