@@ -56,7 +56,9 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
   const logMin = Math.log(minTime)
   const logMax = Math.log(maxTime)
 
-  const scaleX = (time: number) => ((Math.log(time) - logMin) / (logMax - logMin)) * plotWidth
+  // Math.log differs in the last bits between Node and browsers, so round to keep server and client markup identical
+  const scaleX = (time: number) =>
+    Math.round(((Math.log(time) - logMin) / (logMax - logMin)) * plotWidth * 100) / 100
 
   const scaleY = (date: LocalDate) => {
     const min = minDate.toEpochDay()
