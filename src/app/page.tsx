@@ -30,9 +30,11 @@ export default function HistoryPage() {
   )
 
   return (
-    <div {...bind()} className="flex h-screen w-full max-w-xl touch-pan-y flex-col gap-2">
+    <div {...bind()} className="fixed inset-0 flex w-full max-w-xl touch-pan-y flex-col">
       <DayLegend selectedDay={selectedDay} onDaySelect={setSelectedDay} />
-      <PuzzleChart stats={stats} selectedDay={selectedDay} />
+      <main className="min-h-0 min-w-0 flex-1 overflow-auto overscroll-none pt-2">
+        <PuzzleChart stats={stats} selectedDay={selectedDay} />
+      </main>
     </div>
   )
 }

@@ -6,7 +6,8 @@ import { getColor } from "./getColor"
 
 export function DayLegend({ selectedDay, onDaySelect }: Props) {
   return (
-    <div className="flex flex-wrap gap-1 p-2">
+    // WebKit only treats an opaque, full-width sticky top bar as the page's header for the iOS status area
+    <header className="sticky top-0 z-30 flex w-full shrink-0 flex-wrap gap-1 bg-white p-2">
       <div
         className={cx(
           `flex cursor-pointer items-center gap-1 rounded border p-1 hover:bg-gray-100`,
@@ -52,7 +53,7 @@ export function DayLegend({ selectedDay, onDaySelect }: Props) {
           <span className="text-xs">{dayName}</span>
         </div>
       ))}
-    </div>
+    </header>
   )
 }
 

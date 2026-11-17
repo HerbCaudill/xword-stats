@@ -20,6 +20,9 @@ export default function RootLayout({
         <link rel="mask-icon" href="/favicon.png" color="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        {/* The opaque status bar plus the sticky header lets WebKit extend the header color instead of blurring the top */}
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="msapplication-TileColor" content="#ffffff" />
       </head>
       <body
