@@ -1,13 +1,13 @@
-import _persistedStats from '../data/persistedStats.json'
-import { PuzzleStat } from '../types'
-import { describe, expect, it } from 'vitest'
-import { analyzeStats } from './analyzeStats'
-import { hydrate } from './hydrate'
+import _persistedStats from "../data/persistedStats.json"
+import { PuzzleStat } from "../types"
+import { describe, expect, it } from "vitest"
+import { analyzeStats } from "./analyzeStats"
+import { hydrate } from "./hydrate"
 
 const stats = hydrate(_persistedStats)
 
-describe('analyzeStats', () => {
-  it('should analyze puzzle statistics correctly', () => {
+describe("analyzeStats", () => {
+  it("should analyze puzzle statistics correctly", () => {
     const result = analyzeStats(stats as PuzzleStat[])
 
     expect(result.average).toMatchInlineSnapshot(`1113`)
@@ -40,7 +40,7 @@ describe('analyzeStats', () => {
       ]
     `)
 
-    const monday = result.byDayOfWeek['1']
+    const monday = result.byDayOfWeek["1"]
     expect(monday.average).toMatchInlineSnapshot(`455`)
     expect(monday.best?.time).toMatchInlineSnapshot(`259`)
     expect(monday.total).toMatchInlineSnapshot(`122967`)

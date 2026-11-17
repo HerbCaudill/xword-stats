@@ -1,5 +1,5 @@
-import { LocalDate } from '@js-joda/core'
-import type { PuzzleStat } from '@/types'
+import { LocalDate } from "@js-joda/core"
+import type { PuzzleStat } from "@/types"
 
 export type EncodedPuzzleStat = {
   id: number

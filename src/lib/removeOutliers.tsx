@@ -1,5 +1,5 @@
-'use client'
-import type { PuzzleStat } from '@/types'
+"use client"
+import type { PuzzleStat } from "@/types"
 
 // Remove outliers by day of the week using IQR method
 export const removeOutliers = (data: PuzzleStat[]) => {

@@ -10,7 +10,8 @@
     "stats": "NODE_NO_WARNINGS=1 node ./src/scripts/persistStats.ts",
     "test": "vitest",
     "dev:app": "next dev --hostname 127.0.0.1",
-    "dev:url": "localhost-dev url"
+    "dev:url": "localhost-dev url",
+    "format": "oxfmt"
   },
   "dependencies": {
     "@js-joda/core": "^5.6.5",
@@ -30,6 +31,7 @@
     "@types/node": "^20.17.57",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
+    "oxfmt": "0.76.0",
     "tailwindcss": "^4.1.8",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",

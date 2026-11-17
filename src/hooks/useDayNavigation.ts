@@ -1,6 +1,9 @@
-import { useCallback } from 'react'
+import { useCallback } from "react"
 
-export function useDayNavigation(selectedDay: number | null, onDaySelect: (day: number | null) => void) {
+export function useDayNavigation(
+  selectedDay: number | null,
+  onDaySelect: (day: number | null) => void,
+) {
   const navigateToNextDay = useCallback(() => {
     // from "All" go to Monday (1)
     if (selectedDay === null) onDaySelect(1)

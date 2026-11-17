@@ -1,6 +1,6 @@
-import type { LocalDate } from '@js-joda/core'
-import type { NytArchivePuzzle } from '@/types.ts'
-import { fetchNyt } from './fetchNyt.ts'
+import type { LocalDate } from "@js-joda/core"
+import type { NytArchivePuzzle } from "@/types.ts"
+import { fetchNyt } from "./fetchNyt.ts"
 
 /** Gets the IDs of all daily NYT crosswords published in a date range of at most 31 days. */
 export async function getPuzzleIdsForDateRange(

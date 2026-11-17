@@ -1,6 +1,6 @@
-import type { NytGameStates } from '@/types.ts'
-import { fetchNyt } from './fetchNyt.ts'
-import { parseGameStates } from './parseGameStates.ts'
+import type { NytGameStates } from "@/types.ts"
+import { fetchNyt } from "./fetchNyt.ts"
+import { parseGameStates } from "./parseGameStates.ts"
 
 /** Gets the user's solve stats for up to 31 puzzle IDs. */
 export async function getStatsForPuzzleIds(
@@ -9,7 +9,7 @@ export async function getStatsForPuzzleIds(
 ) {
   if (puzzleIds.length === 0) return []
   const states = await fetchNyt<NytGameStates>(
-    `/svc/games/state/crossword_daily/latests?puzzle_ids=${puzzleIds.join(',')}`,
+    `/svc/games/state/crossword_daily/latests?puzzle_ids=${puzzleIds.join(",")}`,
   )
   return parseGameStates(states)
 }

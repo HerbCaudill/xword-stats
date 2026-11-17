@@ -1,4 +1,4 @@
-import type { LocalDate } from '@js-joda/core'
+import type { LocalDate } from "@js-joda/core"
 
 export type PuzzleStat = {
   /** NYT ID for the puzzle */

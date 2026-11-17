@@ -1,14 +1,14 @@
-import _persistedStats from '@/data/persistedStats.json'
-import { hydrate } from '@/lib/hydrate'
-import { mergeStats } from '@/lib/mergeStats'
-import type { PuzzleStat } from '@/types'
-import { LocalDate } from '@js-joda/core'
-import { useEffect, useState } from 'react'
-import { beginningOfTime } from '@/constants'
-import { removeOutliers } from '@/lib/removeOutliers'
+import _persistedStats from "@/data/persistedStats.json"
+import { hydrate } from "@/lib/hydrate"
+import { mergeStats } from "@/lib/mergeStats"
+import type { PuzzleStat } from "@/types"
+import { LocalDate } from "@js-joda/core"
+import { useEffect, useState } from "react"
+import { beginningOfTime } from "@/constants"
+import { removeOutliers } from "@/lib/removeOutliers"
 const persistedStats = hydrate(_persistedStats)
 
-const storageKey = 'puzzleStats.v2'
+const storageKey = "puzzleStats.v2"
 
 export const usePuzzleStats = () => {
   const [stats, setStats] = useState<PuzzleStat[]>(persistedStats)
@@ -28,13 +28,13 @@ export const usePuzzleStats = () => {
 
       const latestDate = currentStats.reduce(
         (latest, stat) => (stat.date.isAfter(latest) ? stat.date : latest),
-        beginningOfTime
+        beginningOfTime,
       )
 
       // If we have cached data and the most recent date is today, no need to fetch
       const today = LocalDate.now()
       if (latestDate && latestDate.isEqual(today)) {
-        console.log('Cached stats are up-to-date, no fetch needed.')
+        console.log("Cached stats are up-to-date, no fetch needed.")
         return
       }
 

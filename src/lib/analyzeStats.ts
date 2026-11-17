@@ -1,14 +1,17 @@
-import type { LocalDate } from '@js-joda/core'
-import { dayNames } from '../constants'
-import type { PuzzleStat } from '../types'
+import type { LocalDate } from "@js-joda/core"
+import { dayNames } from "../constants"
+import type { PuzzleStat } from "../types"
 
 export const analyzeStats = (stats: PuzzleStat[]) => {
-  console.time('analyzeStats')
-  const byDayOfWeek = Object.keys(dayNames).reduce((acc, i) => {
-    const filteredStats = stats.filter(stat => stat.date.dayOfWeek().value() === Number(i))
-    acc[i] = summarizeStats(filteredStats)
-    return acc
-  }, {} as Record<string, StatsSummary>)
+  console.time("analyzeStats")
+  const byDayOfWeek = Object.keys(dayNames).reduce(
+    (acc, i) => {
+      const filteredStats = stats.filter(stat => stat.date.dayOfWeek().value() === Number(i))
+      acc[i] = summarizeStats(filteredStats)
+      return acc
+    },
+    {} as Record<string, StatsSummary>,
+  )
 
   const maxTime = Math.max(...stats.map(stat => stat.time)) + 30 * 60
   const minDate = stats
@@ -20,17 +23,23 @@ export const analyzeStats = (stats: PuzzleStat[]) => {
     .withDayOfYear(1)
     .minusDays(1) // last day of year
 
-  const years = Array.from({ length: maxDate.year() - minDate.year() + 1 }, (_, i) => minDate.year() + i)
+  const years = Array.from(
+    { length: maxDate.year() - minDate.year() + 1 },
+    (_, i) => minDate.year() + i,
+  )
 
   const trailingAverages = calculateTrailingAverages(stats, minDate, maxDate)
 
-  const trailingAveragesByDay = Object.keys(dayNames).reduce((acc, i) => {
-    acc[i] = calculateTrailingAverages(stats, minDate, maxDate, Number(i))
-    return acc
-  }, {} as Record<string, Array<{ date: any; average: number }>>)
+  const trailingAveragesByDay = Object.keys(dayNames).reduce(
+    (acc, i) => {
+      acc[i] = calculateTrailingAverages(stats, minDate, maxDate, Number(i))
+      return acc
+    },
+    {} as Record<string, Array<{ date: any; average: number }>>,
+  )
 
   const summary = summarizeStats(stats)
-  console.timeEnd('analyzeStats')
+  console.timeEnd("analyzeStats")
 
   return {
     ...summary,
@@ -70,17 +79,27 @@ const best = (stats: PuzzleStat[]) => {
 
 const latest = (stats: PuzzleStat[]) => {
   if (stats.length === 0) return undefined
-  return stats.reduce((max, stat) => (stat.dateSolved.isAfter(max.dateSolved) ? stat : max), stats[0])
+  return stats.reduce(
+    (max, stat) => (stat.dateSolved.isAfter(max.dateSolved) ? stat : max),
+    stats[0],
+  )
 }
 
-const calculateTrailingAverages = (stats: PuzzleStat[], minDate: LocalDate, maxDate: LocalDate, dayOfWeek?: number) => {
+const calculateTrailingAverages = (
+  stats: PuzzleStat[],
+  minDate: LocalDate,
+  maxDate: LocalDate,
+  dayOfWeek?: number,
+) => {
   const trailingAverages: Array<{ date: LocalDate; average: number }> = []
 
   // Filter and sort stats once
   const filteredStats = stats
     .filter(stat => {
-      const matchesDayOfWeek = dayOfWeek === undefined || stat.date.dayOfWeek().value() === dayOfWeek
-      const withinDateRange = !stat.dateSolved.isBefore(minDate.minusYears(3)) && !stat.dateSolved.isAfter(maxDate)
+      const matchesDayOfWeek =
+        dayOfWeek === undefined || stat.date.dayOfWeek().value() === dayOfWeek
+      const withinDateRange =
+        !stat.dateSolved.isBefore(minDate.minusYears(3)) && !stat.dateSolved.isAfter(maxDate)
       return matchesDayOfWeek && withinDateRange
     })
     .sort((a, b) => (a.dateSolved.isBefore(b.dateSolved) ? -1 : 1))
@@ -100,7 +119,10 @@ const calculateTrailingAverages = (stats: PuzzleStat[], minDate: LocalDate, maxD
 
     // Remove stats older than 3 years from running totals
     const threeYearsAgo = statDate.minusYears(3)
-    while (currentIndex < filteredStats.length && filteredStats[currentIndex].dateSolved.isBefore(threeYearsAgo)) {
+    while (
+      currentIndex < filteredStats.length &&
+      filteredStats[currentIndex].dateSolved.isBefore(threeYearsAgo)
+    ) {
       runningSum -= filteredStats[currentIndex].time
       runningCount--
       currentIndex++

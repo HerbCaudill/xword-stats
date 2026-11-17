@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { analyzeStats } from '@/lib/analyzeStats'
-import { formatTime } from '@/lib/formatTime'
-import type { PuzzleStat } from '@/types'
-import { LocalDate } from '@js-joda/core'
-import { useEffect, useMemo, useState } from 'react'
-import colors from 'tailwindcss/colors'
-import { getColor } from './getColor'
+import { analyzeStats } from "@/lib/analyzeStats"
+import { formatTime } from "@/lib/formatTime"
+import type { PuzzleStat } from "@/types"
+import { LocalDate } from "@js-joda/core"
+import { useEffect, useMemo, useState } from "react"
+import colors from "tailwindcss/colors"
+import { getColor } from "./getColor"
 
 const color = {
   axis: colors.gray[300],
@@ -40,7 +40,11 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
     return colors.gray[200]
   }
 
-  const getPointRadius = (dayOfWeek: number, isHovered: boolean = false, isBest: boolean = false) => {
+  const getPointRadius = (
+    dayOfWeek: number,
+    isHovered: boolean = false,
+    isBest: boolean = false,
+  ) => {
     let baseRadius = 3 //selectedDay === null || selectedDay === dayOfWeek ? 3 : 2
     if (isBest) baseRadius += 1
     return isHovered ? baseRadius * 1.2 : baseRadius
@@ -53,7 +57,6 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
   // Get data ranges
   const logMin = Math.log(minTime)
   const logMax = Math.log(maxTime)
-  console.log({ maxTime, logMax })
 
   const scaleX = (time: number) => ((Math.log(time) - logMin) / (logMax - logMin)) * plotWidth
 
@@ -68,7 +71,10 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
     const filteredStats = selectedDay !== null ? byDayOfWeek[selectedDay]?.stats : stats
     const yearStats = filteredStats.filter(stat => stat.dateSolved.year() === year)
     const yearCount = yearStats.length
-    const yearAvgTime = yearCount > 0 ? Math.round(yearStats.reduce((sum, stat) => sum + stat.time, 0) / yearCount) : 0
+    const yearAvgTime =
+      yearCount > 0
+        ? Math.round(yearStats.reduce((sum, stat) => sum + stat.time, 0) / yearCount)
+        : 0
 
     return {
       y: scaleY(yearStart),
@@ -87,19 +93,22 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
   const latest = selectedDay !== null ? byDayOfWeek[selectedDay]?.latest : undefined
 
   // Create path for trailing average line - use day-specific averages when a day is selected
-  const currentTrailingAverages = selectedDay !== null ? trailingAveragesByDay[selectedDay] : trailingAverages
+  const currentTrailingAverages =
+    selectedDay !== null ? trailingAveragesByDay[selectedDay] : trailingAverages
 
   // Filter to only show trailing averages up to current date
   const today = LocalDate.now()
-  const filteredTrailingAverages = currentTrailingAverages.filter(point => !point.date.isAfter(today))
+  const filteredTrailingAverages = currentTrailingAverages.filter(
+    point => !point.date.isAfter(today),
+  )
 
   const trailingAveragePath = filteredTrailingAverages
     .map((point, index) => {
       const x = scaleX(point.average)
       const y = scaleY(point.date)
-      return `${index === 0 ? 'M' : 'L'} ${x} ${y}`
+      return `${index === 0 ? "M" : "L"} ${x} ${y}`
     })
-    .join(' ')
+    .join(" ")
 
   const showTooltip = (stat: PuzzleStat) => {
     if (selectedDay === null || selectedDay === stat.date.dayOfWeek().value()) {
@@ -127,7 +136,12 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
   return (
     <div className="flex flex-col">
       <div className="relative">
-        <svg width="100%" height="100%" viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full">
+        <svg
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+          className="h-full w-full"
+        >
           {/* Grid lines */}
           <g>
             {/* Horizontal grid lines (for years) */}
@@ -189,20 +203,20 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                         fill="white"
                         stroke="#000000"
                         strokeWidth={1}
-                        style={{ pointerEvents: 'none' }}
+                        style={{ pointerEvents: "none" }}
                       />
                     )}
                     <circle
                       cx={pad.left + scaleX(stat.time)}
                       cy={pad.top + scaleY(stat.dateSolved)}
                       r={getPointRadius(dayOfWeek, isHovered, isBest)}
-                      fill={isLatest ? '#ffffff' : getPointColor(dayOfWeek)}
-                      stroke={isBest ? '#ffffff' : isLatest ? getColor(dayOfWeek) : 'transparent'}
+                      fill={isLatest ? "#ffffff" : getPointColor(dayOfWeek)}
+                      stroke={isBest ? "#ffffff" : isLatest ? getColor(dayOfWeek) : "transparent"}
                       strokeWidth={isBest ? 3 : 3}
                       style={{
-                        cursor: 'pointer',
-                        pointerEvents: 'all',
-                        zIndex: isHovered ? 1000 : isBest ? 100 : 'auto',
+                        cursor: "pointer",
+                        pointerEvents: "all",
+                        zIndex: isHovered ? 1000 : isBest ? 100 : "auto",
                       }}
                       onClick={() => showTooltip(stat)}
                     />
@@ -216,7 +230,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                         fill="none"
                         stroke={getColor(dayOfWeek)}
                         strokeWidth={2}
-                        style={{ pointerEvents: 'none' }}
+                        style={{ pointerEvents: "none" }}
                       />
                     )}
                   </g>
@@ -248,8 +262,16 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
           <g>
             {xTicks.map((tick, i) => (
               <g key={`x-label-${i}`}>
-                <text x={pad.left + tick.x} y={10} textAnchor="middle" className="text-2xs" fill={color.text}>
-                  {tick.time > 0 ? `${tick.time / 60} ${i === xTicks.length - 1 ? 'min' : ''}` : null}
+                <text
+                  x={pad.left + tick.x}
+                  y={10}
+                  textAnchor="middle"
+                  className="text-2xs"
+                  fill={color.text}
+                >
+                  {tick.time > 0
+                    ? `${tick.time / 60} ${i === xTicks.length - 1 ? "min" : ""}`
+                    : null}
                 </text>
               </g>
             ))}
@@ -259,17 +281,18 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
           <g>
             {yTicks.map((tick, i) => (
               <foreignObject
-                key={`y-label-${i}-${selectedDay || 'all'}`}
+                key={`y-label-${i}-${selectedDay || "all"}`}
                 x={pad.left - 55}
                 y={pad.top + tick.y}
                 width="50"
                 height="35"
               >
                 <div className="flex flex-col items-end">
-                  <div className="font-bold font-serif text-xs text-gray-800">{tick.year}</div>
+                  <div className="font-serif text-xs font-bold text-gray-800">{tick.year}</div>
                   {tick.count > 0 ? (
-                    <div className="text-gray-500 font-mono text-3xs">
-                      {Math.floor(tick.avgTime / 60)}:{(tick.avgTime % 60).toString().padStart(2, '0')}
+                    <div className="text-3xs font-mono text-gray-500">
+                      {Math.floor(tick.avgTime / 60)}:
+                      {(tick.avgTime % 60).toString().padStart(2, "0")}
                     </div>
                   ) : null}
                 </div>
@@ -288,7 +311,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                 strokeWidth={15}
                 fill="none"
                 opacity={0.3}
-                style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: "none" }}
               />
             </g>
           )}
@@ -305,7 +328,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
               const lineColor = getColor(selectedDay)
 
               return (
-                <g key={`avg-group-${i}-${selectedDay || 'all'}`}>
+                <g key={`avg-group-${i}-${selectedDay || "all"}`}>
                   {/* Translucent box from average line to y-axis */}
                   <rect
                     x={pad.left}
@@ -314,7 +337,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                     height={lineEndY - lineStartY}
                     fill={lineColor}
                     opacity={0.05}
-                    style={{ pointerEvents: 'none' }}
+                    style={{ pointerEvents: "none" }}
                   />
                   {/* Average line */}
                   <line
@@ -324,7 +347,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
                     y2={pad.top + lineEndY}
                     stroke={lineColor}
                     strokeWidth={1}
-                    style={{ pointerEvents: 'none' }}
+                    style={{ pointerEvents: "none" }}
                   />
                 </g>
               )
@@ -335,11 +358,11 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
         {/* Tooltip */}
         {tooltip && (
           <div
-            className="absolute bg-white border font-mono text-xs px-2 py-1 rounded shadow-lg pointer-events-none z-10 flex flex-col gap-1 whitespace-nowrap"
+            className="pointer-events-none absolute z-10 flex flex-col gap-1 rounded border bg-white px-2 py-1 font-mono text-xs whitespace-nowrap shadow-lg"
             style={{
               left: `${(tooltip.x / chartWidth) * 100}%`,
               top: `${((tooltip.y - 10) / chartHeight) * 100}%`,
-              transform: 'translate(-50%, -100%)',
+              transform: "translate(-50%, -100%)",
             }}
           >
             <div>{tooltip.stat.dateSolved.toString()}</div>
@@ -351,7 +374,7 @@ export function PuzzleChart({ stats, selectedDay }: Props) {
         )}
       </div>
       {latest && best ? (
-        <div className="text-xs text-gray-800 px-3 flex gap-2">
+        <div className="flex gap-2 px-3 text-xs text-gray-800">
           {/* most recent */}
           <span>
             Latest <strong className="font-mono">{formatTime(latest.time)}</strong>

@@ -1,4 +1,4 @@
-import type { PuzzleStat } from '@/types'
+import type { PuzzleStat } from "@/types"
 
 /** Merges two arrays of stats */
 export const mergeStats = (a: PuzzleStat[], b: PuzzleStat[]): PuzzleStat[] => {

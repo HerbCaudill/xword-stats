@@ -1,10 +1,10 @@
-import type { Metadata } from 'next'
-import { plexMono, plexSans, plexSerif } from './fonts'
-import './globals.css'
+import type { Metadata } from "next"
+import { plexMono, plexSans, plexSerif } from "./fonts"
+import "./globals.css"
 
 export const metadata: Metadata = {
-  title: 'Crossword Stats',
-  description: 'Visualization of crossword completion times',
+  title: "Crossword Stats",
+  description: "Visualization of crossword completion times",
 }
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#ffffff" />
       </head>
       <body
-        className={`${plexSans.variable} ${plexSerif.variable} ${plexMono.variable} antialiased overflow-hidden  select-none`}
+        className={`${plexSans.variable} ${plexSerif.variable} ${plexMono.variable} overflow-hidden antialiased select-none`}
       >
         {children}
       </body>

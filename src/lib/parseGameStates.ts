@@ -1,5 +1,5 @@
-import type { EncodedPuzzleStat } from './hydrate.ts'
-import type { NytGameStates } from '@/types.ts'
+import type { EncodedPuzzleStat } from "./hydrate.ts"
+import type { NytGameStates } from "@/types.ts"
 
 /** Converts NYT game states into puzzle stats, keeping only puzzles that were solved. */
 export const parseGameStates = (

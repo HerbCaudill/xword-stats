@@ -1,23 +1,26 @@
-'use client'
+"use client"
 
-import { dayNames } from '@/constants'
-import cx from 'classnames'
-import { getColor } from './getColor'
+import { dayNames } from "@/constants"
+import cx from "classnames"
+import { getColor } from "./getColor"
 
 export function DayLegend({ selectedDay, onDaySelect }: Props) {
   return (
     <div className="flex flex-wrap gap-1 p-2">
       <div
-        className={cx(`flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-100 border`, {
-          'border-white': selectedDay !== null,
-          'border-gray-300': selectedDay === null,
-        })}
+        className={cx(
+          `flex cursor-pointer items-center gap-1 rounded border p-1 hover:bg-gray-100`,
+          {
+            "border-white": selectedDay !== null,
+            "border-gray-300": selectedDay === null,
+          },
+        )}
         onClick={() => onDaySelect(null)}
       >
         <div
-          className="w-3 h-3 rounded-full"
+          className="h-3 w-3 rounded-full"
           style={{
-            backgroundColor: selectedDay === null ? '#666666' : '#cccccc',
+            backgroundColor: selectedDay === null ? "#666666" : "#cccccc",
           }}
         />
         <span className="text-xs">All</span>
@@ -25,19 +28,25 @@ export function DayLegend({ selectedDay, onDaySelect }: Props) {
       {Object.entries(dayNames).map(([dayNum, dayName]) => (
         <div
           key={dayNum}
-          className={cx(`flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-100 border`, {
-            'border-white': selectedDay !== Number(dayNum),
-            'border-gray-300': selectedDay === Number(dayNum),
-          })}
+          className={cx(
+            `flex cursor-pointer items-center gap-1 rounded border p-1 hover:bg-gray-100`,
+            {
+              "border-white": selectedDay !== Number(dayNum),
+              "border-gray-300": selectedDay === Number(dayNum),
+            },
+          )}
           onClick={() => {
             if (selectedDay === Number(dayNum)) onDaySelect(null)
             else onDaySelect(Number(dayNum))
           }}
         >
           <div
-            className="w-3 h-3 rounded-full"
+            className="h-3 w-3 rounded-full"
             style={{
-              backgroundColor: selectedDay === null || selectedDay === Number(dayNum) ? getColor(dayNum) : '#cccccc',
+              backgroundColor:
+                selectedDay === null || selectedDay === Number(dayNum)
+                  ? getColor(dayNum)
+                  : "#cccccc",
             }}
           />
           <span className="text-xs">{dayName}</span>
