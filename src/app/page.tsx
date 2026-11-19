@@ -3,12 +3,18 @@
 import { DayLegend, PuzzleChart } from "@/components"
 import { useDayNavigation } from "@/hooks/useDayNavigation"
 import { usePuzzleStats } from "@/hooks/useStats"
+import { dayFromQuery } from "@/lib/dayFromQuery"
 import { useDrag } from "@use-gesture/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function HistoryPage() {
   const { stats } = usePuzzleStats()
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
+  // Another app can open the chart on a day, such as the games app's crossword for that day
+  useEffect(() => {
+    const day = dayFromQuery(window.location.search)
+    if (day) setSelectedDay(day)
+  }, [])
   const { navigateToNextDay, navigateToPreviousDay } = useDayNavigation(selectedDay, setSelectedDay)
 
   const bind = useDrag(
